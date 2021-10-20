@@ -1,0 +1,16 @@
+[Unit]
+Description=RoAnonymizer
+After=network.target auditd.service
+
+[Service]
+ExecStart=/data/programs/jdk1.8.0_231/bin/java -cp deps/json-20200518.jar:RoAnonymization.jar Server 8202 model http://127.0.0.1:5104/api/v1.0/ner true
+WorkingDirectory=/data/vasile/roanon
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartPreventExitStatus=255
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
+
